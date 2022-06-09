@@ -55,8 +55,6 @@ void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventT
     } else if(type == WS_EVT_DISCONNECT){
         wsClient = nullptr;
     }else if(type == WS_EVT_DATA){
-        Serial.println((char *)data);
-        Serial.println("||||||||||||");
         String str = String((char *)data);
         onMessageWS(str);
     }
