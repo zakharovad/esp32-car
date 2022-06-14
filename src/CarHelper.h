@@ -11,9 +11,11 @@ class CarHelper {
 
 public:
     CarHelper();
+    void driverUpdatePins(int in1, int in2, int in3, int in4);
     void updateDriveStructure(DriveModel *driveModel, JsonObject &object);
     void updateLedStructure(LedModel *ledModel, JsonObject &object);
     void drivingLoop(DriveModel *driveModel);
     void ledLoop(LedModel *ledModel);
+
 };
 #endif //ESP32_CAR_CARHELPER_H

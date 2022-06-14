@@ -6,13 +6,13 @@
 #include <ArduinoJson.h>
 //left motors
 #define ENA_PIN 1 //for driver ena
-#define IN1_PIN 2 //for driver in1
-#define IN2_PIN 14 //for driver in1
+#define IN1_PIN 14 //for driver in1
+#define IN2_PIN 2 //for driver in1
 #define PWM_ENA_PIN 0 //PWM for driver in1
 //right motors
 #define ENB_PIN 12 //for driver enb
-#define IN3_PIN 13 //for driver in2
-#define IN4_PIN 15 //for driver in2
+#define IN3_PIN 15 //for driver in2
+#define IN4_PIN 13 //for driver in2
 #define PWM_ENB_PIN 1 //PWM for driver in2
 //for driver  deceleration ratio
 #define SPEED_COEF 3
@@ -57,81 +57,40 @@ void CarHelper::updateLedStructure(LedModel *ledModel, JsonObject &object){
 void CarHelper::ledLoop(LedModel *ledModel) {
     ledcWrite(PWM_LED_PIN, ledModel->brightness);
 }
+void CarHelper::driverUpdatePins(int in1, int in2, int in3, int in4){
+    digitalWrite(IN1_PIN, in1);
+    digitalWrite(IN2_PIN, in2);
+    digitalWrite(IN3_PIN, in3);
+    digitalWrite(IN4_PIN, in4);
+}
 void CarHelper::drivingLoop(DriveModel *driveModel){
     switch(driveModel->direction){
         case moveStop:
-            digitalWrite(IN1_PIN, LOW);
-            digitalWrite(IN1_PIN, LOW);
-            digitalWrite(IN3_PIN, LOW);
-            digitalWrite(IN4_PIN, LOW);
-            //ledcWrite(0, driveModel->speed);
-            //ledcWrite(1, driveModel->speed);
+            this->driverUpdatePins(LOW, LOW, LOW, LOW);
             break;
         case moveForward:
-            digitalWrite(IN1_PIN, HIGH);
-            digitalWrite(IN2_PIN, LOW);
-            digitalWrite(IN3_PIN, HIGH);
-            digitalWrite(IN4_PIN, LOW);
-            //ledcWrite(0, driveModel->speed);
-            //ledcWrite(1, driveModel->speed);
+            this->driverUpdatePins(HIGH, LOW, HIGH, LOW);
             break;
         case moveBack:
-
-            digitalWrite(IN1_PIN, LOW);
-            digitalWrite(IN2_PIN, HIGH);
-            digitalWrite(IN3_PIN, LOW);
-            digitalWrite(IN4_PIN, HIGH);
-            //ledcWrite(0, driveModel->speed);
-            //ledcWrite(1, driveModel->speed);
+            this->driverUpdatePins(LOW, HIGH, LOW, HIGH);
             break;
         case moveRight:
-            digitalWrite(IN1_PIN, HIGH);
-            digitalWrite(IN2_PIN, LOW);
-            digitalWrite(IN3_PIN, LOW);
-            digitalWrite(IN4_PIN, LOW);
-            //ledcWrite(0, driveModel->speed);
-            //ledcWrite(1, 0);
+            this->driverUpdatePins(HIGH, LOW, LOW, HIGH);
             break;
         case moveLeft:
-            digitalWrite(IN1_PIN, LOW);
-            digitalWrite(IN2_PIN, LOW);
-            digitalWrite(IN3_PIN, HIGH);
-            digitalWrite(IN4_PIN, LOW);
-            //ledcWrite(0, 0);
-            //ledcWrite(1, driveModel->speed);
+            this->driverUpdatePins(LOW, HIGH, HIGH, LOW);
             break;
         case (moveForward | moveLeft):
-            digitalWrite(IN1_PIN, HIGH);
-            digitalWrite(IN2_PIN, LOW);
-            digitalWrite(IN3_PIN, HIGH);
-            digitalWrite(IN4_PIN, LOW);
-            //ledcWrite(0, driveModel->speed/SPEED_COEF);
-            //ledcWrite(1, driveModel->speed);
-
+            this->driverUpdatePins(LOW, HIGH, LOW, LOW);
             break;
         case (moveForward | moveRight):
-            digitalWrite(IN1_PIN, HIGH);
-            digitalWrite(IN2_PIN, LOW);
-            digitalWrite(IN3_PIN, HIGH);
-            digitalWrite(IN4_PIN, LOW);
-            //ledcWrite(0, driveModel->speed);
-            //ledcWrite(1, driveModel->speed/SPEED_COEF);
+            this->driverUpdatePins(HIGH, LOW, LOW, LOW);
             break;
         case (moveBack | moveLeft):
-            digitalWrite(IN1_PIN, LOW);
-            digitalWrite(IN2_PIN, HIGH);
-            digitalWrite(IN3_PIN, LOW);
-            digitalWrite(IN4_PIN, HIGH);
-            //ledcWrite(0, driveModel->speed/SPEED_COEF);
-            //ledcWrite(1, driveModel->speed);
+            this->driverUpdatePins(LOW, LOW, LOW, HIGH);
             break;
         case (moveBack | moveRight):
-            digitalWrite(IN1_PIN, LOW);
-            digitalWrite(IN2_PIN, HIGH);
-            digitalWrite(IN3_PIN, LOW);
-            digitalWrite(IN4_PIN, HIGH);
-            //ledcWrite(0, driveModel->speed);
-            //ledcWrite(1, driveModel->speed/SPEED_COEF);
+            this->driverUpdatePins(LOW, HIGH, LOW, LOW);
             break;
 
     }
