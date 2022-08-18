@@ -6,13 +6,13 @@
 #include <ArduinoJson.h>
 //left motors
 #define ENA_PIN 1 //for driver ena
-#define IN1_PIN 14 //for driver in1
-#define IN2_PIN 2 //for driver in1
+#define IN1_PIN 13//for driver in1
+#define IN2_PIN 15//for driver in1
 #define PWM_ENA_PIN 0 //PWM for driver in1
 //right motors
 #define ENB_PIN 12 //for driver enb
-#define IN3_PIN 15 //for driver in2
-#define IN4_PIN 13 //for driver in2
+#define IN3_PIN 14 //for driver in2
+#define IN4_PIN 2 //for driver in2
 #define PWM_ENB_PIN 1 //PWM for driver in2
 //for driver  deceleration ratio
 #define SPEED_COEF 3
@@ -81,7 +81,7 @@ void CarHelper::drivingLoop(DriveModel *driveModel){
             this->driverUpdatePins(LOW, HIGH, HIGH, LOW);
             break;
         case (moveForward | moveLeft):
-            this->driverUpdatePins(LOW, HIGH, LOW, LOW);
+            this->driverUpdatePins(LOW, LOW, HIGH, LOW);
             break;
         case (moveForward | moveRight):
             this->driverUpdatePins(HIGH, LOW, LOW, LOW);

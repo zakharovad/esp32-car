@@ -48,7 +48,7 @@ CameraStreamer::CameraStreamer(){
     config.pin_reset = RESET_GPIO_NUM;
     config.xclk_freq_hz = 20000000;
     config.pixel_format = PIXFORMAT_JPEG;
-        config.frame_size = FRAMESIZE_VGA;
+        config.frame_size = FRAMESIZE_SVGA;
         config.jpeg_quality = 10;
         config.fb_count = 3;
 
@@ -57,9 +57,8 @@ CameraStreamer::CameraStreamer(){
     err != ESP_OK ? enable(false): enable(true);
 
     //drop down frame size for higher initial frame rate
-/*    sensor_t * s = esp_camera_sensor_get();
-    s->set_framesize(s, FRAMESIZE_VGA);
-    s->set_quality(s, 20);*/
+     sensor_t * s = esp_camera_sensor_get();
+    s->set_vflip(s, 0);
 }
 void CameraStreamer::streamHandler(AsyncWebServerRequest *request) {
     AsyncJpegStreamResponse *response = new AsyncJpegStreamResponse();
