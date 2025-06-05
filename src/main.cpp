@@ -3,13 +3,14 @@
 #include "./models/DriveModel.h"
 #include "CarHelper.h"
 #include <WiFi.h>
+#include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "CameraStreamer.h"
 
-#define APSSID "esp32-car1"
-#define APPSK  "esp32-car1"
-#define SERVER_PORT 81;
-
+#define APSSID "esp32-car2"
+#define APPSK  "esp32-car2"
+#define SERVER_PORT 80;
+//ESP32 IP 192.168.4.1
 const char *ssid = APSSID;
 const char *password = APPSK;
 int port = SERVER_PORT;
@@ -86,6 +87,8 @@ void setup() {
     IPAddress myIP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
     Serial.println(myIP);
+    Serial.print("Port: ");
+    Serial.println(port);
     startWebSocket();
     Serial.println("\r\nWebSocket server started.");
 }
